@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Pastel Snake</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <div class="game-container">
+            <header class="game-header">
+                <div class="title-section">
+                    <h1>Cozy Snake</h1>
+                    <p class="subtitle">A minimalist pastel escape</p>
+                </div>
+                <div class="scores">
+                    <div class="score-box">
+                        <span class="label">SCORE</span>
+                        <span id="current-score" class="value">0</span>
+                    </div>
+                    <div class="score-box">
+                        <span class="label">BEST</span>
+                        <span id="high-score" class="value">0</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="board-wrapper">
+                <div id="game-board"></div>
+
+                <div id="game-over-modal" class="modal hidden">
+                    <div class="modal-content">
+                        <h2>Oh no!</h2>
+                        <p>You collected <span id="final-score">0</span> stars</p>
+                        <button id="restart-btn" class="primary-btn">Play Again</button>
+                    </div>
+                </div>
+
+                <div id="pause-modal" class="modal hidden">
+                    <div class="modal-content">
+                        <h2>Paused</h2>
+                        <button id="resume-btn" class="primary-btn">Resume</button>
+                    </div>
+                </div>
+
+                <div id="start-modal" class="modal">
+                    <div class="modal-content">
+                        <h2>Ready?</h2>
+                        <p>Use keyboard arrows or on-screen controls.</p>
+                        <button id="start-btn" class="primary-btn">Start Game</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="control-btn" id="btn-up" aria-label="Up">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </button>
+                <div class="controls-row">
+                    <button class="control-btn" id="btn-left" aria-label="Left">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="control-btn action-btn" id="btn-pause" aria-label="Pause/Play">
+                        <svg class="icon-pause" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                            stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg>
+                    </button>
+                    <button class="control-btn" id="btn-right" aria-label="Right">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <button class="control-btn" id="btn-down" aria-label="Down">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

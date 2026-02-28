@@ -1,0 +1,332 @@
+:root {
+    /* Pastel Palette */
+    --bg-color: #f6f0fa;
+    /* Very soft lavender */
+    --card-bg: #ffffff;
+    --text-primary: #5a5a66;
+    --text-secondary: #9fa0b5;
+
+    /* Snake & Food */
+    --snake-head: #ffb7b2;
+    /* Pastel Pink */
+    --snake-body-1: #ffdac1;
+    /* Soft Peach */
+    --snake-body-2: #e2f0cb;
+    /* Mint Green */
+    --snake-body-3: #c7ceea;
+    /* Powder Blue */
+    --food-color: #ffd700;
+    /* Star Yellow/Gold but soft */
+    --food-glow: rgba(255, 215, 0, 0.4);
+
+    --board-bg: #fcfbfe;
+    --grid-line: #f0eaf5;
+
+    /* Shadows & Radii */
+    --shadow-soft: 0 16px 40px rgba(180, 170, 190, 0.15);
+    --shadow-inner: inset 0 2px 10px rgba(0, 0, 0, 0.02);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.app-wrapper {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card Container */
+.game-container {
+    background-color: var(--card-bg);
+    width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-section h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.title-section .subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.scores {
+    display: flex;
+    gap: 12px;
+}
+
+.score-box {
+    background: var(--bg-color);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+}
+
+.score-box .label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.score-box .value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Board Wrapper */
+.board-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--board-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-inner);
+    border: 2px solid var(--grid-line);
+    overflow: hidden;
+}
+
+#game-board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Create a soft grid pattern using background gradients */
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 5% 5%;
+    /* 20x20 grid visually */
+}
+
+/* Snake & Food Elements */
+.snake-part {
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    border-radius: 8px;
+    /* Smooth rounded body */
+    transition: left 0.12s linear, top 0.12s linear;
+    z-index: 2;
+    transform: scale(0.9);
+    /* Slight gap between segments visually */
+}
+
+.snake-head {
+    background-color: var(--snake-head);
+    z-index: 3;
+    box-shadow: 0 0 10px rgba(255, 183, 178, 0.4);
+}
+
+.snake-body-0 {
+    background-color: var(--snake-body-1);
+}
+
+.snake-body-1 {
+    background-color: var(--snake-body-2);
+}
+
+.snake-body-2 {
+    background-color: var(--snake-body-3);
+}
+
+/* They will cycle through colors via JS */
+
+.food {
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Soft glowing star via inline SVG in JS or simple CSS */
+}
+
+.food::after {
+    content: '⭐';
+    font-size: clamp(10px, 4vw, 16px);
+    display: block;
+    filter: drop-shadow(0 0 4px var(--food-glow));
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+}
+
+/* Modals */
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal.hidden .modal-content {
+    transform: translateY(20px);
+}
+
+.modal-content h2 {
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-weight: 800;
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+#final-score {
+    color: var(--snake-head);
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--snake-head), var(--snake-body-1));
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    color: white;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 183, 178, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 183, 178, 0.5);
+}
+
+.primary-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile Controls */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.controls-row {
+    display: flex;
+    gap: 16px;
+}
+
+.control-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+    box-shadow: inset 0 0 0 2px transparent, 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.control-btn:active,
+.control-btn:hover {
+    background: var(--card-bg);
+    color: var(--snake-head);
+    box-shadow: inset 0 0 0 2px var(--snake-head), 0 4px 12px rgba(255, 183, 178, 0.2);
+    transform: scale(0.95);
+}
+
+.action-btn {
+    background: #fdfbf7;
+}
+
+@media (min-width: 600px) {
+    .controls {
+        display: none;
+        /* Hide on desktop assuming keyboard use */
+    }
+}
